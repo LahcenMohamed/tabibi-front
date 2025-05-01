@@ -1,0 +1,22 @@
+form {
+  width: 700px;
+  background-color: #F9F9FF;
+}
+
+p {
+  color: #52525B;
+  width: 700px;
+}
+
+.full-name-continer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 10px;
+}
+
+.contact-continer,
+.info-continer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 15px;
+}

@@ -1,0 +1,101 @@
+<h1 class="m-auto text-center mt-4">Your ckinic inforamtion</h1>
+<p class="fs-6 m-auto my-4 text-center">Kindly provide the details of your clinic below.</p>
+<div class="d-flex justify-content-center">
+  <form class="shadow p-3 mb-5 bg-body-tertiary rounded-2 p-4"
+        (ngSubmit)="onSubmit()"
+        [formGroup]="clinicForm">
+
+  <div class="info-continer">
+    <app-custom-input
+      icon="healing"
+      label="Name"
+      formControlName="name"
+      [control]="name"
+    ></app-custom-input>
+    <app-custom-input
+    type="select"
+    icon="list"
+    label="Specialization"
+    formControlName="specialization"
+    [options]="specializationOptions"
+  ></app-custom-input>
+  </div>
+
+
+  <div class="contact-continer">
+    <app-custom-input
+    icon="phone"
+    label="Phone Number"
+    type="number"
+    formControlName="clinicPhoneNumber"
+    [control]="clinicPhoneNumber"
+  ></app-custom-input>
+
+
+  <app-custom-input
+    icon="phone"
+    label="Second Phone Number"
+    type="number"
+    formControlName="secondPhoneNumber"
+    [control]="secondPhoneNumber"
+  ></app-custom-input>
+
+  <app-custom-input
+    icon="email"
+    type="email"
+    label="Email"
+    formControlName="clinicEmail"
+    [control]="clinicEmail"
+  ></app-custom-input>
+  </div>
+
+
+  <div class="contact-continer">
+    <app-custom-input
+    icon="pin_drop"
+    label="state"
+    formControlName="state"
+    [control]="state"
+  ></app-custom-input>
+
+
+  <app-custom-input
+    icon="pin_drop"
+    label="City"
+    formControlName="city"
+    [control]="city"
+  ></app-custom-input>
+
+  <app-custom-input
+    icon="pin_drop"
+    label="City"
+    formControlName="street"
+    [control]="street"
+  ></app-custom-input>
+  </div>
+
+
+  <app-custom-input
+    icon="pin_drop"
+    label="In Map"
+    type="url"
+    formControlName="urlOnMap"
+    [control]="urlOnMap"
+  ></app-custom-input>
+
+
+  <app-custom-input
+    icon="text_snippet"
+    label="Min Description"
+    formControlName="minDescription"
+    [control]="minDescription"
+  ></app-custom-input>
+
+  <div class="button-container">
+    <button class="primary-button">
+      <span class="my-auto">next setp</span>
+      <mat-icon class="mx-2 my-auto big-icon p-0 ">chevron_right</mat-icon>
+    </button>
+  </div>
+  </form>
+</div>

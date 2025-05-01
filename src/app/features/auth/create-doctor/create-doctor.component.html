@@ -1,0 +1,66 @@
+<h1 class="m-auto text-center mt-4">Your inforamtion</h1>
+<p class="fs-6 m-auto my-4 text-center">Please fill out your medical information.</p>
+<div class="d-flex justify-content-center">
+  <form class="shadow p-3 mb-5 bg-body-tertiary rounded-2 p-4"
+        (ngSubmit)="onSubmit()"
+        [formGroup]="doctorForm">
+
+  <div class="full-name-continer">
+    <app-custom-input
+      icon="account_circle"
+      label="First Name"
+      formControlName="firstName"
+      [control]="firstName"
+    ></app-custom-input>
+
+    <app-custom-input
+      icon="account_circle"
+      label="Middel Name"
+      formControlName="middelName"
+      [control]="middelName"
+    ></app-custom-input>
+
+    <app-custom-input
+      icon="account_circle"
+      label="Last Name"
+      formControlName="lastName"
+      [control]="lastName"
+    ></app-custom-input>
+  </div>
+
+
+  <div class="info-continer">
+    <app-custom-input
+    type="select"
+    icon="person"
+    label="Gender"
+    formControlName="gender"
+    [options]="genderOptions"
+  ></app-custom-input>
+
+    <app-custom-input
+      icon="date_range"
+      type="date"
+      label="Date of Birth"
+      formControlName="dateOfBirth"
+      [control]="dateOfBirth"
+    ></app-custom-input>
+  </div>
+
+
+  <app-custom-input
+    icon="phone"
+    label="Phone Number"
+    type="number"
+    formControlName="phoneNumber"
+    [control]="phoneNumber"
+  ></app-custom-input>
+
+  <div class="button-container">
+    <button class="primary-button">
+      <span class="my-auto">next setp</span>
+      <mat-icon class="mx-2 my-auto big-icon p-0 ">chevron_right</mat-icon>
+    </button>
+  </div>
+  </form>
+</div>

@@ -1,0 +1,33 @@
+<h1 class="m-auto text-center mt-4">Create  your account</h1>
+<p class="fs-6 m-auto my-4 text-center">Welcome to the first platform to manage your clinic and your patients' appointments</p>
+<div class="d-flex justify-content-center">
+  <form class="shadow p-3 mb-5 bg-body-tertiary rounded-2 p-4"
+        (ngSubmit)="onSubmit()"
+        [formGroup]="siginupForm">
+
+  <app-custom-input
+    icon="email"
+    label="Email"
+    type="email"
+    placeholder="Enter your email"
+    formControlName="email"
+    [control]="email"
+  ></app-custom-input>
+
+  <app-custom-input
+    icon="password"
+    label="Password"
+    type="password"
+    placeholder="Enter your passowrd"
+    formControlName="password"
+    [control]="password"
+  ></app-custom-input>
+
+  <div class="button-container">
+    <button type="submit" class="primary-button">
+      <span class="my-auto">next setp</span>
+      <mat-icon class="mx-2 my-auto big-icon p-0 ">chevron_right</mat-icon>
+    </button>
+  </div>
+  </form>
+</div>
