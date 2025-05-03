@@ -5,10 +5,19 @@ import { CustomInputComponent } from '../../../shared/componenets/custom-input/c
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { SignUpDataService } from '../services/sign-data-service/sign-up-data.service';
+import { CustomSelectComponent } from '../../../shared/componenets/custom-select/custom-select.component';
+import { AuthService } from '../../../services/auth-services/auth.service';
+import { DoctorService } from '../../../services/doctor-service/doctor.service';
+import { SignUpRequest } from '../../../models/auth/sign-up-request';
+import { CreateDoctorRequets } from '../../../models/doctors/create-doctor-request';
+import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-clinic',
   imports: [
+    HttpClientModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -16,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     MatFormFieldModule,
     MatSelectModule,
+    CustomSelectComponent,
     CustomInputComponent
   ],
   templateUrl: './create-clinic.component.html',
@@ -37,9 +47,14 @@ export class CreateClinicComponent {
   // create an array of the enum values for *ngFor
   public specializationOptions = Object.values(Specialization);
 
-  constructor() {
+  constructor(private signUpDataService: SignUpDataService,
+    private _authService: AuthService,
+    private _doctorService: DoctorService,
+    private router: Router) {
     this.initFormControls();
     this.initFormGroup();
+    console.log(signUpDataService.getAccountDataData());
+    console.log(signUpDataService.getDoctorData());
   }
   private initFormControls(): void {
     this.name = new FormControl('', {
@@ -116,6 +131,60 @@ export class CreateClinicComponent {
 
   onSubmit():void
   {
+    if(this.clinicForm.valid)
+    {
+      let accountData = this.signUpDataService.getAccountDataData();
+      let doctorData = this.signUpDataService.getDoctorData();
+      let signUpRequest: SignUpRequest =
+      {
+        username: `${doctorData.firstName} ${doctorData.middelName} ${doctorData.lastName} ${this.name.value}`,
+        email: accountData.email,
+        password: accountData.password
+      }
+      let userId = this._authService.signUp(signUpRequest).subscribe({
+        next: (response) => {
+          console.log('User ID:', response.data!);
+          let doctorRequest: CreateDoctorRequets = {
+            fullName: {
+              firstName: doctorData.firstName,
+              middelName: doctorData.middelName,
+              lastName: doctorData.lastName
+            },
+            gender: doctorData.gender,
+            dateOfBirth: doctorData.dateOfBirth,
+            phoneNumber: doctorData.phoneNumber,
+            emailAddress: accountData.email,
+            notes: null,
+            name: this.name.value,
+            specialization: this.specialization.value,
+            clinicEmail: this.clinicEmail.value,
+            clinicPhoneNumber: this.clinicPhoneNumber.value,
+            secondPhoneNumber: this.secondPhoneNumber.value,
+            address: {
+              state: this.state.value,
+              city: this.city.value,
+              street: this.street.value,
+              urlOnMap: this.urlOnMap.value
+            },
+            minDescription: this.minDescription.value,
+            userId: response.data!
+          }
+          this._doctorService.createDoctor(doctorRequest).subscribe({
+            next: (result) => {
+              this.router.navigate(['auth','sign-in']);
+            },
+            error: (error) => {
+              console.error('Sign up failed:', error.message);
+              // Handle the error (e.g., show message to user)
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Sign up failed:', error.message);
+          // Handle the error (e.g., show message to user)
+        }
+      });
+    }
   }
 }
 

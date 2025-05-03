@@ -1,29 +1,4 @@
-<!-- custom-input.component.html -->
-@if(type === 'select')
-{
-  <div class="input-container">
-    <label *ngIf="label">{{ label }}</label>
-    <div [ngClass]="{
-      'input-wrapper': true,
-      'sel': true
-    }"
-         >
-      <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
-        <mat-select formControlName="control">
-          @for (opt of options; track $index) {
-            <mat-option [value]="opt">
-              {{ opt }}
-            </mat-option>
-          }
 
-        </mat-select>
-
-    </div>
-
-  </div>
-
-}
-@else {
   <div class="input-container">
     <label *ngIf="label">{{ label }}</label>
     <div [ngClass]="{
@@ -53,4 +28,3 @@
 
   </div>
 
-}

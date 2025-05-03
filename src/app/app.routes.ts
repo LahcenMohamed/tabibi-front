@@ -4,6 +4,8 @@ import { AuthFlowGuard } from './features/auth/guards/auth-flow.guard';
 export const routes: Routes = [
   {path: '', redirectTo: 'auth', pathMatch: 'full', },
   {path: 'auth', children: [
+    {path: 'sign-in', loadComponent: () => import('./features/auth/sign-in/sign-in.component')
+      .then((m) => m.SignInComponent)},
     {path: 'sign-up', loadComponent: () => import('./features/auth/sign-up/sign-up.component')
       .then((m) => m.SignUpComponent)},
     {path: 'doctor', loadComponent: () => import('./features/auth/create-doctor/create-doctor.component')

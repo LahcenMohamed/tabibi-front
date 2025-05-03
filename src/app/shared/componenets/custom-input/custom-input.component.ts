@@ -1,9 +1,10 @@
 // custom-input.component.ts
 import { NgClass, NgFor, NgForOf, NgIf } from '@angular/common';
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatOption, MatSelect, MatSelectModule } from '@angular/material/select';
 
 @Component({
@@ -13,7 +14,6 @@ import { MatOption, MatSelect, MatSelectModule } from '@angular/material/select'
     NgIf,
     MatIconModule,
     MatFormFieldModule,
-    MatSelectModule,
     NgClass],
   templateUrl: './custom-input.component.html',
   styleUrls: ['./custom-input.component.scss'],
@@ -33,7 +33,6 @@ export class CustomInputComponent implements ControlValueAccessor {
   @Input() disabled: boolean = false;
   @Input() inputClass: string = '';
   @Input() control!: FormControl;
-  @Input() options: any[] = [];
   @Output() inputChange = new EventEmitter<string>();
 
   value: string = '';

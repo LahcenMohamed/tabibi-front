@@ -6,6 +6,7 @@ import { CustomInputComponent } from "../../../shared/componenets/custom-input/c
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { AccountData, SignUpDataService } from '../services/sign-data-service/sign-up-data.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,7 +26,7 @@ export class SignUpComponent {
   email!: FormControl;
   password!: FormControl;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private signUpDataService : SignUpDataService) {
     this.initFormControls();
     this.initFormGrpup();
   }
@@ -43,10 +44,13 @@ export class SignUpComponent {
     })
   }
 
+
   onSubmit():void
   {
     if(this.siginupForm.valid)
     {
+      let accountData = new AccountData(this.email.value,this.password.value);
+      this.signUpDataService.setAccountDataData(accountData);
       this.router.navigate(['auth','doctor'], {
         state: { fromInternalNavigation: true }
       });
