@@ -1,0 +1,116 @@
+@use '../../../styles/variables' as *;
+.work-time-container {
+  margin: 20px 20px 20px 0px ;
+  width: 90%;
+}
+
+.timeline-header {
+  display: flex;
+  height: 30px;
+  margin-left: 100px; /* Make space for day label */
+  border-bottom: 1px solid #ddd;
+}
+
+.hour-marker {
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: #666;
+}
+
+.day-row {
+  display: flex;
+  height: 60px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.day-label {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background-color: white;
+  border-radius: 4px 0 0 4px;
+  color: Black;
+  font-size: 17px;
+  border: 1px solid $primary-color;
+  border-right: 0px;
+}
+
+.timeline {
+  flex: 1;
+  position: relative;
+  display: flex;
+  border: 1px solid $primary-color;
+  background-color: #fff;
+  border-radius: 0 4px 4px 0;
+}
+
+.hour-block {
+  flex: 1;
+  border-right: 1px dashed #eee;
+  height: 100%;
+}
+
+.hour-block:last-child {
+  border-right: none;
+}
+
+.time-block {
+  position: absolute;
+  height: 40px;
+  top: 10px;
+  background-color: $primary-color;
+  color: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.time-block:hover {
+  background-color: rgba(66, 133, 244, 1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+/* For overlapping time blocks */
+.timeline > .time-block:nth-child(even) {
+  top: 5px;
+}
+
+.timeline > .time-block:nth-child(odd) {
+  top: 15px;
+}
+
+.loading {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .timeline-header {
+    margin-left: 60px;
+  }
+
+  .day-label {
+    width: 60px;
+    font-size: 12px;
+  }
+
+  .time-block {
+    font-size: 10px;
+  }
+}

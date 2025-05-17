@@ -1,0 +1,94 @@
+<h1>employees</h1>
+<div class="d-flex justify-content-between">
+  <div class="input-container">
+      <input
+        type="text"
+        placeholder="Search"
+        [(ngModel)]="searchItem"
+      />
+    <button (click)="search()">
+      <mat-icon >search</mat-icon>
+    </button>
+  </div>
+  <div class="px-4 feat-container">
+    <button class="secondery-btn" (click)="exportToCSV()">
+      <mat-icon >ios_share</mat-icon>
+      <span>Export</span>
+    </button>
+
+    <button class="secondery-btn prim-color" (click)="Add()">
+      <mat-icon >add</mat-icon>
+      <span>Add</span>
+    </button>
+  </div>
+</div>
+<div class="table-continer">
+<table mat-table [dataSource]="filteredEmployees" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <!-- First Name Column -->
+<ng-container matColumnDef="firstName">
+  <th mat-header-cell *matHeaderCellDef ><button (click)="sortBy('firstName')">First Name </button> </th>
+  <td mat-cell *matCellDef="let employee"> {{ employee.firstName }} </td>
+</ng-container>
+
+<!-- Last Name Column -->
+<ng-container matColumnDef="lastName">
+  <th mat-header-cell *matHeaderCellDef> <button (click)="sortBy('lastName')">Last Name</button> </th>
+  <td mat-cell *matCellDef="let employee"> {{ employee.lastName }} </td>
+</ng-container>
+
+<!-- Phone Number Column -->
+<ng-container matColumnDef="phoneNumber">
+  <th mat-header-cell *matHeaderCellDef> <button (click)="sortBy('phoneNumber')">Phone</button> </th>
+  <td mat-cell *matCellDef="let employee"> {{ employee.phoneNumber }} </td>
+</ng-container>
+
+<!-- Email Column -->
+<ng-container matColumnDef="email">
+  <th mat-header-cell *matHeaderCellDef> <button (click)="sortBy('email')">Email</button> </th>
+  <td mat-cell *matCellDef="let employee"> {{ employee.email || '-' }} </td>
+</ng-container>
+
+<!-- Address Column -->
+<ng-container matColumnDef="address">
+  <th mat-header-cell *matHeaderCellDef> <button (click)="sortBy('address')">Address</button> </th>
+  <td mat-cell *matCellDef="let employee"> {{ employee.address || '-' }} </td>
+</ng-container>
+
+<!-- Salary Column -->
+<ng-container matColumnDef="salary">
+  <th mat-header-cell *matHeaderCellDef> <button (click)="sortBy('salary')">Salary</button> </th>
+  <td mat-cell *matCellDef="let employee"> {{ employee.salary }} </td>
+</ng-container>
+
+<!-- Job Type Column -->
+<ng-container matColumnDef="jobType">
+  <th mat-header-cell *matHeaderCellDef> <button (click)="sortBy('jobType')">Job Type</button> </th>
+  <td mat-cell *matCellDef="let employee"> {{ getJobTypeName(employee.jobType) }} </td>
+</ng-container>
+
+
+<ng-container matColumnDef="actions">
+  <th mat-header-cell *matHeaderCellDef> Action </th>
+  <td mat-cell *matCellDef="let employee" class="action-buttons-cell">
+    <div class="action-buttons-container">
+      <button mat-icon-button color="primary" (click)="Update(employee)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn"(click)="delete(employee.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </td>
+</ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="employeesHeaders"></tr>
+  <tr mat-row *matRowDef="let row; columns: employeesHeaders;"></tr>
+</table>
+</div>
+

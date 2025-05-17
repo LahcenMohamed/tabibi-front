@@ -1,0 +1,88 @@
+@use '../../../../styles/variables' as *;
+nav {
+  background-color: white;
+  height: 70%;
+  width: 80px;
+  border-radius: 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  padding: 20px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.nav-w{
+  height: fit-content;
+  padding: 5px 0;
+  justify-content: center;
+}
+
+.main {
+  background: linear-gradient(to bottom, #0B8FAC20, #7BC1B720, #9DCBFF20);
+  height: 100%;
+  margin: 0;
+  padding: 40px 15px;
+}
+
+a {
+  margin-top: 15px;
+  border-radius: 24px;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.5s ease, color 0.5s ease;
+
+  mat-icon {
+    color: $primary-color;
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+  }
+
+  &:hover {
+    background-color: $primary-color;
+    color: white;
+    mat-icon {
+      color: white;
+    }
+  }
+}
+
+
+button {
+  border-radius: 24px;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: transparent;
+  border: none;
+  mat-icon {
+    color: $primary-color;
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+  }
+
+  &:hover,
+  &.active-link {
+    background-color: $primary-color;
+    color: white;
+    mat-icon {
+      color: white;
+    }
+  }
+}
+
+.main-nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+

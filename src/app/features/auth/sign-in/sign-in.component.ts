@@ -58,16 +58,14 @@ export class SignInComponent {
             }
             let userId = this.authService.signIn(signInRequest).subscribe({
               next: (response) => {
-                this.snackBar.open("success");
+                localStorage.setItem('token', response.data!);
+                this.router.navigate(['']);
               },
               error: (error) => {
                 console.error('Sign up failed:', error.message);
-                // Handle the error (e.g., show message to user)
+                this.snackBar.open("email or password in incorrect");
               }
             });
-      this.router.navigate(['auth','doctor'], {
-        state: { fromInternalNavigation: true }
-      });
     }
   }
 }

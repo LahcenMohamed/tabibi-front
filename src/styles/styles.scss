@@ -44,3 +44,43 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 
+
+button{
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.5s ease;
+  border-radius: 5px;
+  &:hover{
+    background-color: #CCCCCC;
+  }
+}
+
+
+.feat-container {
+  display: flex;
+  justify-content: space-between;
+  width: fit-content;
+}
+.secondery-btn {
+  border: none;
+  background-color: white;
+  color: #333333;
+  width: 100px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50px;
+  margin: 0 5px;
+}
+
+
+.prim-color {
+  background-color: $primary-color;
+  color: white;
+  &:hover{
+    background-color: $secondry-color;
+  }
+}

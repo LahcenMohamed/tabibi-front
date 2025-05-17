@@ -1,0 +1,17 @@
+<div class="row main">
+  <div class="col-1 main-nav">
+    <nav>
+      <a mat-button routerLink="/employees" routerLinkActive="active-link"><mat-icon>person_outlined</mat-icon></a>
+      <a mat-button routerLink="/work-times" routerLinkActive="active-link"><mat-icon>work_outlined</mat-icon></a>
+      <a mat-button routerLink="/about" routerLinkActive="active-link"><mat-icon>book_online_outlined</mat-icon></a>
+      <a mat-button routerLink="/contact" routerLinkActive="active-link"><mat-icon>settings_outlined</mat-icon></a>
+    </nav>
+
+    <nav class="nav-w">
+      <button mat-button><mat-icon>logout_outlined</mat-icon></button>
+    </nav>
+  </div>
+  <div class="col-11">
+    <router-outlet></router-outlet>
+  </div>
+</div>

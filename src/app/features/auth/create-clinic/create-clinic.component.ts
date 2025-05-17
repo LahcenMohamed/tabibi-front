@@ -174,7 +174,7 @@ export class CreateClinicComponent {
               this.router.navigate(['auth','sign-in']);
             },
             error: (error) => {
-              console.error('Sign up failed:', error.message);
+              console.error('Sign up failed:', error);
               // Handle the error (e.g., show message to user)
             }
           });

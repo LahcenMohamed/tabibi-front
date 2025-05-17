@@ -1,0 +1,150 @@
+<div class="px-4 feat-container">
+  <button class="secondery-btn" (click)="exportToCSV()">
+    <mat-icon >ios_share</mat-icon>
+    <span>Export</span>
+  </button>
+
+  <button class="secondery-btn prim-color" (click)="Add()">
+    <mat-icon >add</mat-icon>
+    <span>Add</span>
+  </button>
+</div>
+<div class="work-time-container">
+  <!-- Timeline header -->
+  <div class="timeline-header">
+    @for(hour of hours; track $index) {
+      <div class="hour-marker">{{hour}}</div>
+    }
+  </div>
+
+  <!-- Day rows -->
+  @if (workTimes) {
+    <!-- Sunday -->
+    <div class="day-row">
+      <div class="day-label">Sunday</div>
+      <div class="timeline">
+        @for(hour of hours; track $index) {
+          <div class="hour-block"></div>
+        }
+        @for (workTime of filterByDay(DayOfWeek.Sunday); track workTime.id) {
+          <div
+            class="time-block"
+            [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
+            [title]="workTime.startTime + ' - ' + workTime.endTime">
+            {{workTime.startTime}} - {{workTime.endTime}}
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Monday -->
+    <div class="day-row">
+      <div class="day-label">Monday</div>
+      <div class="timeline">
+        @for(hour of hours; track $index) {
+          <div class="hour-block"></div>
+        }
+        @for (workTime of filterByDay(DayOfWeek.Monday); track workTime.id) {
+          <div
+            class="time-block"
+            [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
+            [title]="workTime.startTime + ' - ' + workTime.endTime">
+            {{workTime.startTime}} - {{workTime.endTime}}
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Tuesday -->
+    <div class="day-row">
+      <div class="day-label">Tuesday</div>
+      <div class="timeline">
+        @for(hour of hours; track $index) {
+          <div class="hour-block"></div>
+        }
+        @for (workTime of filterByDay(DayOfWeek.Tuesday); track workTime.id) {
+          <div
+            class="time-block"
+            [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
+            [title]="workTime.startTime + ' - ' + workTime.endTime">
+            {{workTime.startTime}} - {{workTime.endTime}}
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Wednesday -->
+    <div class="day-row">
+      <div class="day-label">Wednesday</div>
+      <div class="timeline">
+        @for(hour of hours; track $index) {
+          <div class="hour-block"></div>
+        }
+        @for (workTime of filterByDay(DayOfWeek.Wednesday); track workTime.id) {
+          <div
+            class="time-block"
+            [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
+            [title]="workTime.startTime + ' - ' + workTime.endTime">
+            {{workTime.startTime}} - {{workTime.endTime}}
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Thursday -->
+    <div class="day-row">
+      <div class="day-label">Thursday</div>
+      <div class="timeline">
+        @for(hour of hours; track $index) {
+          <div class="hour-block"></div>
+        }
+        @for (workTime of filterByDay(DayOfWeek.Thursday); track workTime.id) {
+          <div
+            class="time-block"
+            [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
+            [title]="workTime.startTime + ' - ' + workTime.endTime">
+            {{workTime.startTime}} - {{workTime.endTime}}
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Friday -->
+    <div class="day-row">
+      <div class="day-label">Friday</div>
+      <div class="timeline">
+        @for(hour of hours; track $index) {
+          <div class="hour-block"></div>
+        }
+        @for (workTime of filterByDay(DayOfWeek.Friday); track workTime.id) {
+          <div
+            class="time-block"
+            [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
+            [title]="workTime.startTime + ' - ' + workTime.endTime">
+            {{workTime.startTime}} - {{workTime.endTime}}
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Saturday -->
+    <div class="day-row">
+      <div class="day-label">Saturday</div>
+      <div class="timeline">
+        @for(hour of hours; track $index) {
+          <div class="hour-block"></div>
+        }
+        @for (workTime of filterByDay(DayOfWeek.Saturday); track workTime.id) {
+          <div
+            class="time-block"
+            [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
+            [title]="workTime.startTime + ' - ' + workTime.endTime">
+            {{workTime.startTime}} - {{workTime.endTime}}
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="loading">Loading work times...</div>
+  }
+</div>

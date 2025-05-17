@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-center containe">
+  <form class="shadow p-3 bg-body-tertiary rounded-2 p-4"
+        [formGroup]="data">
+
+  <div class="full-name-continer">
+    <app-custom-input
+      icon="account_circle"
+      label="Start Time"
+      type="time"
+      formControlName="startTime"
+      [control]="startTime"
+    ></app-custom-input>
+
+    <app-custom-input
+      icon="account_circle"
+      label="End Time"
+      type="time"
+      formControlName="endTime"
+      [control]="endTime"
+    ></app-custom-input>
+
+    <app-custom-select
+    formControlName="day"
+    label="Day"
+    icon="work"
+    [options]="dayOfWeekOptions"
+  ></app-custom-select>
+  </div>
+
+  <div mat-dialog-actions class="button-container">
+    <button mat-button class="secondery-btn" (click)="onNoClick()">Cancel</button>
+    <button mat-button class="secondery-btn prim-color" (click)="submit()" cdkFocusInitial>Ok</button>
+  </div>
+  </form>
+</div>

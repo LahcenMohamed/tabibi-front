@@ -1,0 +1,87 @@
+<div class="d-flex justify-content-center containe">
+  <form class="shadow p-3 bg-body-tertiary rounded-2 p-4"
+        [formGroup]="data">
+
+  <div class="full-name-continer">
+    <app-custom-input
+      icon="account_circle"
+      label="First Name"
+      formControlName="firstName"
+      [control]="firstName"
+    ></app-custom-input>
+
+    <app-custom-input
+      icon="account_circle"
+      label="Middel Name"
+      formControlName="middelName"
+      [control]="middelName"
+    ></app-custom-input>
+
+    <app-custom-input
+      icon="account_circle"
+      label="Last Name"
+      formControlName="lastName"
+      [control]="lastName"
+    ></app-custom-input>
+  </div>
+
+
+  <div class="info-continer">
+    <app-custom-select
+    formControlName="jobType"
+    label="Job Type"
+    icon="work"
+    [options]="jobTypeOptions"
+  ></app-custom-select>
+
+  <app-custom-input
+    icon="location_on"
+    label="Address"
+    formControlName="address"
+    [control]="address"
+  ></app-custom-input>
+  </div>
+
+
+  <div class="info-continer">
+    <app-custom-input
+    icon="phone"
+    label="Phone Number"
+    type="number"
+    formControlName="phoneNumber"
+    [control]="phoneNumber"
+  ></app-custom-input>
+
+  <app-custom-input
+    icon="email"
+    label="Email"
+    type="email"
+    formControlName="email"
+    [control]="email"
+  ></app-custom-input>
+  </div>
+
+
+  <div class="info-continer">
+    <app-custom-input
+    icon="money"
+    label="Salary"
+    type="number"
+    formControlName="salary"
+    [control]="salary"
+  ></app-custom-input>
+
+  <app-custom-input
+    icon="notes"
+    label="Description"
+    formControlName="description"
+    [control]="description"
+  ></app-custom-input>
+  </div>
+
+  <div mat-dialog-actions class="button-container">
+    <button mat-button class="secondery-btn" (click)="onNoClick()">Cancel</button>
+    <button mat-button class="secondery-btn prim-color" (click)="submit()" cdkFocusInitial>Ok</button>
+  </div>
+  </form>
+</div>
