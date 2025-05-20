@@ -45,7 +45,12 @@ export class CreateClinicComponent {
   minDescription!: FormControl;
 
   // create an array of the enum values for *ngFor
-  public specializationOptions = Object.values(Specialization);
+  public specializationOptions = Object.values(Specialization)
+  .filter(key => isNaN(Number(key))) // filter out the numeric keys
+      .map(key => ({
+        label: key,
+        value: Specialization[key as keyof typeof Specialization]
+      }));
 
   constructor(private signUpDataService: SignUpDataService,
     private _authService: AuthService,
@@ -78,6 +83,7 @@ export class CreateClinicComponent {
     this.secondPhoneNumber = new FormControl('', {
       nonNullable: false,
       validators: [
+        Validators.required,
         Validators.pattern(/^[0-9]+$/),
         Validators.maxLength(20)
       ]

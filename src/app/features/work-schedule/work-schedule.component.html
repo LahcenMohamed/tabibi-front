@@ -1,0 +1,15 @@
+<div class="calendar-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Work Schedule Calendar</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-calendar
+        [selected]="selectedDate"
+        *ngIf="workSchedulesLoaded"
+        (selectedChange)="onDateSelected($event)"
+        [dateClass]="dateClassFn">
+      </mat-calendar>
+    </mat-card-content>
+  </mat-card>
+</div>

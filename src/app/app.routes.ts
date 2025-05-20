@@ -28,6 +28,21 @@ export const routes: Routes = [
         path: 'work-times',loadComponent: ()=> import('./features/work-time/work-time.component')
         .then((m) => m.WorkTimeComponent),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'work-schedules',loadComponent: ()=> import('./features/work-schedule/work-schedule.component')
+        .then((m) => m.WorkScheduleComponent),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'appointments',loadComponent: ()=> import('./features/appointment/appointment.component')
+        .then((m) => m.AppointmentComponent),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'patient',loadComponent: ()=> import('./features/patient/patient.component')
+        .then((m) => m.PatientComponent),
+        canActivate: [AuthGuard]
       }
     ]
   }

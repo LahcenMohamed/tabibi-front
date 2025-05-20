@@ -1,0 +1,67 @@
+@use '../../../styles/variables' as *;
+
+.calendar-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+
+  mat-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    mat-calendar {
+      width: 100%;
+
+
+      ::ng-deep {
+        .mat-calendar-body-cell {
+          &.has-schedule {
+            & > .mat-calendar-body-cell-content {
+              background-color: #e3f2fd;
+              border-radius: 50%;
+            }
+          }
+
+          &.future-date {
+            & > .mat-calendar-body-cell-content {
+              font-weight: bold;
+              color: black;
+              background-color: #ddd;
+            }
+          }
+
+          // Selected date style
+          &.mat-calendar-body-selected {
+            & > .mat-calendar-body-cell-content {
+              background-color: #1976d2 !important;
+              color: white !important;
+            }
+          }
+
+          // Hover styles
+          & > .mat-calendar-body-cell-content {
+            &:hover {
+              background-color: rgba(25, 118, 210, 0.1);
+            }
+          }
+        }
+
+        // Default cell style
+        .mat-calendar-body-cell-content {
+          height: 36px;
+          width: 36px;
+          line-height: 36px;
+          border-radius: 50%;
+        }
+
+        // Combined styles
+        .has-schedule.future-date {
+          & > .mat-calendar-body-cell-content {
+            background-color: $secondry-color;
+            color: $primary-color;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}

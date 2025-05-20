@@ -1,0 +1,179 @@
+<mat-card class="patient-card">
+  <mat-card-header>
+    <mat-icon class="avatar-icon">{{ genderIcon }}</mat-icon>
+    <mat-card-title>{{ patient.fullName }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ patient.birthDate | date:'longDate' }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="info-row">
+      <mat-icon>place</mat-icon>
+      <span>{{ patient.city }}, {{ patient.state }}</span>
+    </div>
+    <div class="info-row">
+      <mat-icon>phone</mat-icon>
+      <span>{{ patient.phoneNumber }}</span>
+    </div>
+    <div class="info-row">
+      <mat-icon>email</mat-icon>
+      <span>{{ patient.email }}</span>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+
+<div class="charts-container">
+  <!-- First row: Sugar, Heights, Weight -->
+  <div class="chart-row">
+    <div class="chart-col">
+      <h3>Blood Sugar</h3>
+      <ngx-charts-line-chart
+        *ngIf="bloodSugras?.length"
+        [results]="bloodSugras"
+        [xAxis]="true" [yAxis]="true"
+        [legend]="false"
+        [showXAxisLabel]="true" [showYAxisLabel]="true"
+        [xAxisLabel]="'Date'"
+        [yAxisLabel]="'Value'"
+        [autoScale]="true"
+      ></ngx-charts-line-chart>
+    </div>
+
+    <div class="chart-col">
+      <h3>Heights</h3>
+      <ngx-charts-line-chart
+        *ngIf="heights?.length"
+        [results]="heights"[xAxis]="true"
+        [yAxis]="true"
+        [legend]="false"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Date'"
+        [yAxisLabel]="'Value'"
+        [autoScale]="true">
+      </ngx-charts-line-chart>
+    </div>
+
+    <div class="chart-col">
+      <h3>Weight</h3>
+      <ngx-charts-line-chart
+        *ngIf="weights?.length"
+        [results]="weights"  [xAxis]="true"
+        [yAxis]="true"
+        [legend]="false"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Date'"
+        [yAxisLabel]="'Value'"
+        [autoScale]="true">
+      </ngx-charts-line-chart>
+    </div>
+    </div>
+
+  <div class="chart-row">
+    <div class="chart-col">
+      <h3>Temperature</h3>
+      <ngx-charts-line-chart
+        *ngIf="temperatures?.length"
+        [results]="temperatures"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="false"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Date'"
+      [yAxisLabel]="'Value'"
+      [autoScale]="true">
+    </ngx-charts-line-chart>
+  </div>
+
+  <div class="chart-col">
+    <h3>Blood Pressure</h3>
+    <ngx-charts-line-chart
+      *ngIf="bloodPressures?.length"
+      [results]="bloodPressures"
+      [legend]="true"
+  [xAxis]="true"
+  [yAxis]="true"
+  [legend]="true"
+  [showXAxisLabel]="true"
+  [showYAxisLabel]="true"
+  [xAxisLabel]="'Date'"
+  [yAxisLabel]="'Blood Pressure'"
+  [autoScale]="true">
+  </ngx-charts-line-chart>
+  </div>
+
+</div>
+
+
+<div class="des row">
+  <mat-card class="col-3">
+    <h4>Genetic Diseases</h4>
+    <ul>
+      @for (item of geneticDiseases; track $index) {
+        <li>
+          {{ item.name }}
+        </li>
+      }@empty {
+        <li>No addictions found</li>
+      }
+    </ul>
+  </mat-card>
+
+  <mat-card class="col-3">
+    <h4>Addictions</h4>
+    <ul>
+      @for (item of addications; track $index) {
+        <li>
+          {{ item.name }}
+        </li>
+      }@empty {
+        <li>No addictions found</li>
+      }
+    </ul>
+  </mat-card>
+
+  <mat-card class="col-3">
+    <h4>Allergies</h4>
+    <ul>
+      @for (item of allergies; track $index) {
+        <li>
+          {{ item.name }}
+        </li>
+      }@empty {
+        <li>No allergies found</li>
+      }
+    </ul>
+  </mat-card>
+</div>
+
+<div class="des row">
+  <mat-card class="col-3">
+    <h4>Chronic Diseases</h4>
+    <ul>
+      @for (item of chronicDiseases; track $index) {
+        <li>
+          {{ item.name }}
+        </li>
+      }@empty {
+        <li>No chronic diseases found</li>
+      }
+    </ul>
+  </mat-card>
+
+  <mat-card class="col-3">
+    <h4>Disease</h4>
+    <ul>
+      @for (item of disease; track $index) {
+        <li>
+          {{ item.name }}: from {{ item.startDate | date:'longDate' }} to {{ item.endDate | date:'longDate' }}
+        </li>
+      }@empty {
+        <li>No disease found</li>
+      }
+    </ul>
+  </mat-card>
+</div>

@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-center containe">
+  <form class="shadow p-3 bg-body-tertiary rounded-2 p-4"
+        [formGroup]="data">
+
+  <div class="full-name-continer">
+    <app-custom-input
+      icon="number"
+      label="Max People"
+      type="number"
+      formControlName="maxCount"
+      [control]="maxCount"
+    ></app-custom-input>
+  </div>
+
+  <div mat-dialog-actions class="button-container">
+    <button mat-button class="secondery-btn" (click)="onNoClick()">Cancel</button>
+    <button mat-button class="secondery-btn prim-color" (click)="submit()" cdkFocusInitial>Ok</button>
+  </div>
+  </form>
+</div>

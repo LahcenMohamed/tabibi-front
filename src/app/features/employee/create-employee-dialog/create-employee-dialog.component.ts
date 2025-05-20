@@ -38,7 +38,12 @@ export class CreateEmployeeDialogComponent {
   jobType!: FormControl;
   description!: FormControl;
 
-  public jobTypeOptions = Object.values(JobType);
+  public jobTypeOptions = Object.keys(JobType)
+    .filter(key => isNaN(Number(key))) // filter out the numeric keys
+    .map(key => ({
+      label: key,
+      value: JobType[key as keyof typeof JobType]
+    }));
   constructor(@Inject(MAT_DIALOG_DATA) private dialogData: Employee | null){
     this.initForm();
     if (this.dialogData) {

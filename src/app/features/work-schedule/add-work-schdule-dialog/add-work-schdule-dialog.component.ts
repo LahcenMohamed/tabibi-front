@@ -9,8 +9,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
+
 @Component({
-  selector: 'app-add-work-time-dialog',
+  selector: 'app-add-work-schdule-dialog',
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -23,23 +24,15 @@ import { MatInputModule } from '@angular/material/input';
     CustomSelectComponent,
     MatDialogActions
   ],
-  templateUrl: './add-work-time-dialog.component.html',
-  styleUrl: './add-work-time-dialog.component.scss'
+  templateUrl: './add-work-schdule-dialog.component.html',
+  styleUrl: './add-work-schdule-dialog.component.scss'
 })
-export class AddWorkTimeDialogComponent {
-  readonly dialogRef = inject(MatDialogRef<AddWorkTimeDialogComponent>);
+export class AddWorkSchduleDialogComponent {
+  readonly dialogRef = inject(MatDialogRef<AddWorkSchduleDialogComponent>);
   data!: FormGroup;
-  startTime!: FormControl;
-  endTime!: FormControl;
-  day!: FormControl;
+  maxCount!: FormControl;
 
-  public dayOfWeekOptions = Object.values(DayOfWeek)
-  .filter(key => isNaN(Number(key))) // filter out the numeric keys
-        .map(key => ({
-          label: key,
-          value: DayOfWeek[key as keyof typeof DayOfWeek]
-        }));
-
+  public dayOfWeekOptions = Object.values(DayOfWeek);
   constructor(@Inject(MAT_DIALOG_DATA) private dialogData: WorkTime | null){
     this.initForm();
     if (this.dialogData) {
@@ -49,15 +42,11 @@ export class AddWorkTimeDialogComponent {
 
   initForm(): void {
     // Initialize each FormControl
-    this.startTime   = new FormControl('', { nonNullable: true });
-    this.endTime  = new FormControl('', { nonNullable: false , validators: [Validators.required]});
-    this.day    = new FormControl('', { nonNullable: true,  validators: [Validators.required] });
+    this.maxCount  = new FormControl(0, { nonNullable: false , validators: [Validators.required]});
 
     // Build the FormGroup
     this.data = new FormGroup({
-      startTime:   this.startTime,
-      endTime:  this.endTime,
-      day:    this.day
+      maxCount:   this.maxCount
     });
   }
 
@@ -69,7 +58,7 @@ export class AddWorkTimeDialogComponent {
   submit(): void {
     if (this.data.valid) {
       // Construct an Employee object
-      const value = this.data.value as WorkTime;
+      const value = this.maxCount.value as number;
       this.dialogRef.close(value);
     } else {
       this.data.markAllAsTouched();

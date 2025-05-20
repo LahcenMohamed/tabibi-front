@@ -1,0 +1,42 @@
+// charts-container.scss
+.charts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  overflow-y: auto;
+  width: 100%;
+  .chart-row {
+    display: flex;
+    gap: 1rem;
+    height: 400px;         // or your desired height
+    width: 100%;
+  }
+
+  .chart-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+
+    h3 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    ngx-charts-line-chart {
+      flex: 1;            // let the chart fill remaining height
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+}
+
+.des {
+  gap: 20px;
+  margin-top: 20px;
+}

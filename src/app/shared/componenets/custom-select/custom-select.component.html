@@ -13,8 +13,8 @@
       (selectionChange)="onSelectionChange($event.value)"
     >
     @for (opt of options; track $index) {
-      <mat-option [value]="opt">
-        {{ opt }}
+      <mat-option [value]="opt.value">
+        {{ opt.label }}
       </mat-option>
     }
     </mat-select>

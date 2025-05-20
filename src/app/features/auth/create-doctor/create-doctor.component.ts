@@ -35,7 +35,12 @@ export class CreateDoctorComponent {
   phoneNumber!: FormControl;
 
   // create an array of the enum values for *ngFor
-  public genderOptions = Object.values(Gender);
+  public genderOptions = Object.values(Gender)
+  .filter(key => isNaN(Number(key))) // filter out the numeric keys
+    .map(key => ({
+      label: key,
+      value: Gender[key as keyof typeof Gender]
+    }));;
 
   constructor(private router: Router, private signUpDataService: SignUpDataService) {
     this.initFormControls();

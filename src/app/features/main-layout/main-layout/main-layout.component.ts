@@ -9,5 +9,8 @@ import { RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
   styleUrl: './main-layout.component.scss'
 })
 export class MainLayoutComponent {
-
+  logOut():void{
+    localStorage.removeItem('token');
+    window.location.reload();
+  }
 }
