@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../services/auth-services/auth.service';
 import { SignInRequest } from '../../../models/auth/sign-in-request';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,7 +18,8 @@ import { CustomInputComponent } from '../../../shared/componenets/custom-input/c
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    CustomInputComponent
+    CustomInputComponent,
+    RouterLink
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
