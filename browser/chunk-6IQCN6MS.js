@@ -1,0 +1,1 @@
+var r=(d=>(d[d.Sunday=0]="Sunday",d[d.Monday=1]="Monday",d[d.Tuesday=2]="Tuesday",d[d.Wednesday=3]="Wednesday",d[d.Thursday=4]="Thursday",d[d.Friday=5]="Friday",d[d.Saturday=6]="Saturday",d))(r||{});export{r as a};

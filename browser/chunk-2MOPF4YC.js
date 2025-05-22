@@ -1,0 +1,1 @@
+import{W as i,j as a}from"./chunk-W7RDRLIT.js";var n=class t{patientSubject=new a(null);patient$=this.patientSubject.asObservable();constructor(){}setData(e){this.patientSubject.next(e)}getData(){return this.patientSubject.value}static \u0275fac=function(r){return new(r||t)};static \u0275prov=i({token:t,factory:t.\u0275fac,providedIn:"root"})};export{n as a};
