@@ -71,6 +71,10 @@ export class WorkScheduleComponent implements OnInit {
 
   onDateSelected(date: Date | null) {
     if (!date) return;
+    const y = date.getFullYear();
+    const m = `${date.getMonth()+1}`.padStart(2,'0');
+    const d = `${date.getDate()}`.padStart(2,'0');
+    console.log(`${y}-${m}-${d}`);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -78,11 +82,11 @@ export class WorkScheduleComponent implements OnInit {
       const ref = this.dialog.open(AddWorkSchduleDialogComponent, {
         width: '600px'
       });
-      console.log(new Date(date.getFullYear(),date.getMonth(),date.getDay()));
+
       ref.afterClosed().subscribe((result: number | undefined) => {
                 if (result) {
                   const newSchedule: CreateWorkSchedule = {
-                    date: date.toISOString().split('T')[0],
+                    date: `${y}-${m}-${d}`,
                     maxAppointmentsCount: result
                   };
                   this.workScheduleService.Add(newSchedule).subscribe({
