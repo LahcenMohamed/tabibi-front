@@ -9,6 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { CustomInputComponent } from '../../../shared/componenets/custom-input/custom-input.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SpinnerComponent } from '../../../shared/componenets/spinner/spinner.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,7 +22,9 @@ import { CustomInputComponent } from '../../../shared/componenets/custom-input/c
     MatSelectModule,
     MatIconModule,
     CustomInputComponent,
-    RouterLink
+    RouterLink,
+    MatProgressSpinnerModule,
+    SpinnerComponent
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
@@ -28,8 +33,13 @@ export class SignInComponent {
   siginupForm!: FormGroup;
   email!: FormControl;
   password!: FormControl;
+  isLoading = false;
 
-  constructor(private router: Router, private authService:AuthService, private snackBar: MatSnackBar) {
+  constructor(
+    private router: Router,
+    private authService:AuthService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) {
     this.initFormControls();
     this.initFormGrpup();
   }
@@ -52,6 +62,9 @@ export class SignInComponent {
   {
     if(this.siginupForm.valid)
     {
+      const spn = this.dialog.open(SpinnerComponent, {
+        disableClose: true // you can pass initial data here if needed
+      });
       let signInRequest: SignInRequest =
             {
               emailOrUserName: this.email.value,
@@ -67,6 +80,7 @@ export class SignInComponent {
                 this.snackBar.open("email or password in incorrect");
               }
             });
+      spn.close();
     }
   }
 }
