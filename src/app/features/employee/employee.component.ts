@@ -180,6 +180,7 @@ export class EmployeeComponent {
         }
         this._employeeService.createEmployee(emp).subscribe({
           next: (response) => {
+            result.id = response.data!;
             this.filteredEmployees.data = [...this.filteredEmployees.data, result];
             spinner.close();
             this.snackBar.openFromComponent(CustomSnackbarComponent, {
