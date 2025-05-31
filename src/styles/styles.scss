@@ -84,3 +84,23 @@ button{
     background-color: $secondry-color;
   }
 }
+
+// More specific targeting for shadow removal
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: transparent;
+  --mdc-snackbar-supporting-text-color: inherit;
+  box-shadow: none !important; // Remove shadow from container
+
+  .mat-mdc-snack-bar-surface {
+    background-color: transparent !important;
+    color: inherit;
+    box-shadow: none !important; // Remove shadow from surface
+    -webkit-box-shadow: none !important; // For webkit browsers
+    -moz-box-shadow: none !important; // For Firefox
+  }
+}
+
+// Additional override if needed
+.mdc-snackbar .mdc-snackbar__surface {
+  box-shadow: none !important;
+}

@@ -11,6 +11,8 @@ import { AddWorkTimeDialogComponent } from '../work-time/add-work-time-dialog/ad
 import { AddWorkSchduleDialogComponent } from './add-work-schdule-dialog/add-work-schdule-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CustomSnackbarComponent } from '../../shared/componenets/custom-snackbar/custom-snackbar.component';
+import { SpinnerComponent } from '../../shared/componenets/spinner/spinner.component';
 
 @Component({
   selector: 'app-work-schedule',
@@ -84,23 +86,46 @@ export class WorkScheduleComponent implements OnInit {
       });
 
       ref.afterClosed().subscribe((result: number | undefined) => {
-                if (result) {
-                  const newSchedule: CreateWorkSchedule = {
-                    date: `${y}-${m}-${d}`,
-                    maxAppointmentsCount: result
-                  };
-                  this.workScheduleService.Add(newSchedule).subscribe({
-                    next: (response) => {
-                      this.snackBar.open("refersh please");
-                    },
-                    error: (err) => {
-                      console.log(err);
-                    }
-                  });
-                } else {
-                  console.log('Dialog was cancelled');
-                }
+        if (result) {
+          const spinner = this.dialog.open(SpinnerComponent);
+          const newSchedule: CreateWorkSchedule = {
+            date: `${y}-${m}-${d}`,
+            maxAppointmentsCount: result
+          };
+          this.workScheduleService.Add(newSchedule).subscribe({
+            next: (response) => {
+              spinner.close();
+              const addedSchedule: WorkSchedule = {
+                id: response.data!,
+                date: date,
+                maxAppointmentsCount: newSchedule.maxAppointmentsCount
+              };
+              this.workSchedules.push(addedSchedule);
+              this.workSchedulesLoaded = true;
+              this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                data: {
+                  message: 'Work schedule added successfully',
+                  type: 'success'
+                },
+                panelClass: ['custom-snackbar-container']
               });
+            },
+            error: (err) => {
+              console.log(err);
+              spinner.close();
+              this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                data: {
+                  message: 'Failed to add work schedule',
+                  type: 'error'
+                },
+                panelClass: ['custom-snackbar-container']
+              });
+            }
+          });
+        } else {
+          console.log('Dialog was cancelled');
+        }
+      });
     }
     else if (this.isDateHasSchedule(date)) {
       const target = new Date(date);
@@ -112,8 +137,12 @@ export class WorkScheduleComponent implements OnInit {
       })[0];
       this.router.navigate(['appointments'], { queryParams: { workScheduleId: workS.id } });
     } else {
-      this.snackBar.open('You cannot add a schedule for a past date.', 'Close', {
-        duration: 3000,
+      this.snackBar.openFromComponent(CustomSnackbarComponent, {
+        data: {
+          message: 'You cannot add a schedule for a past date.',
+          type: 'info'
+        },
+        panelClass: ['custom-snackbar-container']
       });
     }
   }

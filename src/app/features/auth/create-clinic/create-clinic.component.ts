@@ -13,6 +13,10 @@ import { SignUpRequest } from '../../../models/auth/sign-up-request';
 import { CreateDoctorRequets } from '../../../models/doctors/create-doctor-request';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerComponent } from '../../../shared/componenets/spinner/spinner.component';
+import { CustomSnackbarComponent } from '../../../shared/componenets/custom-snackbar/custom-snackbar.component';
 
 @Component({
   selector: 'app-create-clinic',
@@ -55,7 +59,9 @@ export class CreateClinicComponent {
   constructor(private signUpDataService: SignUpDataService,
     private _authService: AuthService,
     private _doctorService: DoctorService,
-    private router: Router) {
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) {
     this.initFormControls();
     this.initFormGroup();
     console.log(signUpDataService.getAccountDataData());
@@ -139,6 +145,7 @@ export class CreateClinicComponent {
   {
     if(this.clinicForm.valid)
     {
+      const spinner = this.dialog.open(SpinnerComponent);
       let accountData = this.signUpDataService.getAccountDataData();
       let doctorData = this.signUpDataService.getDoctorData();
       let signUpRequest: SignUpRequest =
@@ -177,19 +184,34 @@ export class CreateClinicComponent {
           }
           this._doctorService.createDoctor(doctorRequest).subscribe({
             next: (result) => {
+              spinner.close();
               this.router.navigate(['auth','sign-in']);
             },
             error: (error) => {
               console.error('Sign up failed:', error);
-              // Handle the error (e.g., show message to user)
-            }
+              spinner.close();
+              this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                  data: {
+                    message: 'Email or password is incorrect',
+                    type: 'error'
+                  },
+                  panelClass: ['custom-snackbar-container']});
+              }
           });
         },
         error: (error) => {
           console.error('Sign up failed:', error.message);
-          // Handle the error (e.g., show message to user)
+          spinner.close();
+          this.snackBar.openFromComponent(CustomSnackbarComponent, {
+            data: {
+              message: 'there is an error in the sign up process',
+              type: 'error'
+            },
+            panelClass: ['custom-snackbar-container']});
         }
+
       });
+
     }
   }
 }

@@ -6,6 +6,9 @@ import { MatIcon } from '@angular/material/icon';
 import { AddWorkTimeDialogComponent } from './add-work-time-dialog/add-work-time-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerComponent } from '../../shared/componenets/spinner/spinner.component';
+import { CustomSnackbarComponent } from '../../shared/componenets/custom-snackbar/custom-snackbar.component';
+import { ConfirmDialogComponent } from '../../shared/componenets/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-work-time',
@@ -14,31 +17,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './work-time.component.scss'
 })
 export class WorkTimeComponent {
-  Add() {
-    const ref = this.dialog.open(AddWorkTimeDialogComponent, {
-          width: '70vw',     // desired width
-          maxWidth: '3000px',
-          height: '80vh',     // desired width
-          maxHeight: '3000px',
-          data: {}  // you can pass initial data here if needed
-        });
-
-        ref.afterClosed().subscribe((result: WorkTime | undefined) => {
-          if (result) {
-            this.workTimeServices.Add(result).subscribe({
-              next: (response) => {
-                this.snackBar.open("refersh please");
-              },
-              error: (err) => {
-                console.log(err);
-              }
-            });
-          } else {
-            console.log('Dialog was cancelled');
-          }
-        });
-  }
-
   workTimes!: WorkTime[];
   DayOfWeek: any = DayOfWeek;
   hours: string[] = [];
@@ -70,6 +48,165 @@ export class WorkTimeComponent {
     })
   }
 
+  Add() {
+    const ref = this.dialog.open(AddWorkTimeDialogComponent, {
+          width: '70vw',     // desired width
+          maxWidth: '3000px',
+          height: '80vh',     // desired width
+          maxHeight: '3000px',
+          data: {}  // you can pass initial data here if needed
+        });
+
+        ref.afterClosed().subscribe((result: WorkTime | undefined) => {
+          if (result) {
+            const spinner = this.dialog.open(SpinnerComponent);
+            this.workTimeServices.Add(result).subscribe({
+              next: (response) => {
+                result.id = response.data!;
+                this.workTimes.push(result);
+                spinner.close();
+                this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                  data: {
+                    message: 'Work time added successfully',
+                    type: 'success'
+                  },
+                  panelClass: ['custom-snackbar-container']
+                });
+              },
+              error: (err) => {
+                console.log(err);
+                spinner.close();
+                this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                  data: {
+                    message: 'Failed to add work time',
+                    type: 'error'
+                  },
+                  panelClass: ['custom-snackbar-container']
+                });
+              }
+            });
+          } else {
+            console.log('Dialog was cancelled');
+          }
+        });
+  }
+
+  update(workTime: WorkTime) {
+    const ref = this.dialog.open(AddWorkTimeDialogComponent, {
+          width: '70vw',     // desired width
+          maxWidth: '3000px',
+          height: '80vh',     // desired width
+          maxHeight: '3000px',
+          data: workTime
+           // you can pass initial data here if needed
+        });
+
+        ref.afterClosed().subscribe((result: WorkTime | undefined) => {
+          if (result) {
+            const spinner = this.dialog.open(SpinnerComponent);
+            result.id = workTime.id; // Ensure the ID is set for update
+            this.workTimeServices.update(result).subscribe({
+              next: (response) => {
+                const index = this.workTimes.findIndex(x => x.id === result.id);
+                if (index !== -1) {
+                  this.workTimes[index] = result; // Update the existing work time
+                } else {
+                  this.workTimes.push(result); // If not found, add it
+                }
+                spinner.close();
+                this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                  data: {
+                    message: 'Work time updated successfully',
+                    type: 'success'
+                  },
+                  panelClass: ['custom-snackbar-container']
+                });
+                console.log('Work time updated successfully');
+              },
+              error: (err) => {
+                console.log(err);
+                spinner.close();
+                this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                  data: {
+                    message: 'Failed to update work time',
+                    type: 'error'
+                  },
+                  panelClass: ['custom-snackbar-container']
+                });
+                console.log('Failed to update work time');
+              }
+            });
+          } else {
+            console.log('Dialog was cancelled');
+          }
+        });
+  }
+
+  delete(workTime: WorkTime) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '400px',
+          data: {
+            title: 'Confirm Deletion',
+            message: `Are you sure you want to delete the work time for ${workTime.day}?`,
+            confirmText: 'Delete',
+            cancelText: 'Cancel'
+          }
+        });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+        const spinner = this.dialog.open(SpinnerComponent);
+        this.workTimeServices.delete(workTime.id).subscribe({
+          next: (response) => {
+            this.workTimes = this.workTimes.filter(x => x.id !== workTime.id);
+            spinner.close();
+            this.snackBar.openFromComponent(CustomSnackbarComponent, {
+              data: {
+                message: 'Work time deleted successfully',
+                type: 'success'
+              },
+              panelClass: ['custom-snackbar-container']
+            });
+            console.log('Work time deleted successfully');
+          },
+          error: (err) => {
+            console.log(err);
+            spinner.close();
+            this.snackBar.openFromComponent(CustomSnackbarComponent, {
+              data: {
+                message: 'Failed to delete work time',
+                type: 'error'
+              },
+              panelClass: ['custom-snackbar-container']
+            });
+            console.log('Failed to delete work time');
+          }
+        });
+      } else {
+        console.log('Dialog was cancelled');
+      }
+    });
+  }
+
+  private clickTimer: any;
+  private clickDelay = 200; // milliseconds
+  
+  onTimeBlockClick(workTime: WorkTime, event: Event): void {
+    event.preventDefault();
+  
+    if (this.clickTimer) {
+      // This is a double click
+      clearTimeout(this.clickTimer);
+      this.clickTimer = null;
+      this.delete(workTime);
+    } else {
+      // Wait to see if there's a second click
+      this.clickTimer = setTimeout(() => {
+        this.clickTimer = null;
+        this.update(workTime);
+      }, this.clickDelay);
+    }
+  }
   filterByDay(day:DayOfWeek): WorkTime[] {
     return this.workTimes.filter(x => x.day === day);
   }

@@ -27,12 +27,13 @@
           <div class="hour-block"></div>
         }
         @for (workTime of filterByDay(DayOfWeek.Sunday); track workTime.id) {
-          <div
+          <button
+          (click)="onTimeBlockClick(workTime, $event)"
             class="time-block"
             [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
             [title]="workTime.startTime + ' - ' + workTime.endTime">
             {{workTime.startTime}} - {{workTime.endTime}}
-          </div>
+          </button>
         }
       </div>
     </div>
@@ -45,12 +46,13 @@
           <div class="hour-block"></div>
         }
         @for (workTime of filterByDay(DayOfWeek.Monday); track workTime.id) {
-          <div
+          <button
+          (click)="onTimeBlockClick(workTime, $event)"
             class="time-block"
             [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
             [title]="workTime.startTime + ' - ' + workTime.endTime">
             {{workTime.startTime}} - {{workTime.endTime}}
-          </div>
+          </button>
         }
       </div>
     </div>
@@ -63,12 +65,13 @@
           <div class="hour-block"></div>
         }
         @for (workTime of filterByDay(DayOfWeek.Tuesday); track workTime.id) {
-          <div
+          <button
+          (click)="onTimeBlockClick(workTime, $event)"
             class="time-block"
             [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
             [title]="workTime.startTime + ' - ' + workTime.endTime">
             {{workTime.startTime}} - {{workTime.endTime}}
-          </div>
+          </button>
         }
       </div>
     </div>
@@ -81,12 +84,13 @@
           <div class="hour-block"></div>
         }
         @for (workTime of filterByDay(DayOfWeek.Wednesday); track workTime.id) {
-          <div
+          <button
+          (click)="onTimeBlockClick(workTime, $event)"
             class="time-block"
             [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
             [title]="workTime.startTime + ' - ' + workTime.endTime">
             {{workTime.startTime}} - {{workTime.endTime}}
-          </div>
+          </button>
         }
       </div>
     </div>
@@ -99,12 +103,13 @@
           <div class="hour-block"></div>
         }
         @for (workTime of filterByDay(DayOfWeek.Thursday); track workTime.id) {
-          <div
+          <button
+          (click)="onTimeBlockClick(workTime, $event)"
             class="time-block"
             [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
             [title]="workTime.startTime + ' - ' + workTime.endTime">
             {{workTime.startTime}} - {{workTime.endTime}}
-          </div>
+          </button>
         }
       </div>
     </div>
@@ -117,12 +122,13 @@
           <div class="hour-block"></div>
         }
         @for (workTime of filterByDay(DayOfWeek.Friday); track workTime.id) {
-          <div
+          <button
+          (click)="onTimeBlockClick(workTime, $event)"
             class="time-block"
             [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
             [title]="workTime.startTime + ' - ' + workTime.endTime">
             {{workTime.startTime}} - {{workTime.endTime}}
-          </div>
+          </button>
         }
       </div>
     </div>
@@ -135,12 +141,13 @@
           <div class="hour-block"></div>
         }
         @for (workTime of filterByDay(DayOfWeek.Saturday); track workTime.id) {
-          <div
+          <button
+          (click)="onTimeBlockClick(workTime, $event)"
             class="time-block"
             [ngStyle]="calculateTimeBlockStyle(workTime.startTime, workTime.endTime)"
             [title]="workTime.startTime + ' - ' + workTime.endTime">
             {{workTime.startTime}} - {{workTime.endTime}}
-          </div>
+          </button>
         }
       </div>
     </div>

@@ -8,6 +8,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-employee-dialog.component';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateEmployeeRequest } from '../../models/employees/update-employee-request';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerComponent } from '../../shared/componenets/spinner/spinner.component';
+import { CustomSnackbarComponent } from '../../shared/componenets/custom-snackbar/custom-snackbar.component';
+import { ConfirmDialogComponent } from '../../shared/componenets/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-employee',
@@ -21,6 +25,22 @@ export class EmployeeComponent {
   filteredEmployees = new MatTableDataSource<Employee>();
 
   employeesHeaders: string[] = ['firstName', 'lastName', 'phoneNumber', 'email', 'salary', 'jobType', 'actions'];
+
+
+  constructor(
+    private _employeeService: EmployeeService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar) {
+    const token = localStorage.getItem('token');
+    console.log(token);
+  }
+
+  JobType = JobType;
+
+  getJobTypeName(value: number): string {
+    return JobType[value];
+  }
+
   search(): void {
     const term = this.searchItem.toLowerCase();
     this.filteredEmployees.data = this.employees.filter(emp =>
@@ -29,16 +49,47 @@ export class EmployeeComponent {
   }
 
   delete(id: string) {
-    this._employeeService.delete(id).subscribe({
-      next: (response) => {
-        //this.filteredEmployees.data = [...this.filteredEmployees.data, result];
-        console.log("object");
-      },
-      error: (err) => {
-        console.log(err);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirm Deletion',
+        message: 'Are you sure you want to delete this employee? This action cannot be undone.',
+        confirmText: 'Delete',
+        cancelText: 'Cancel'
       }
-    })
-    }
+    });
+
+    // Handle dialog result
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        const spinner = this.dialog.open(SpinnerComponent);
+        this._employeeService.delete(id).subscribe({
+          next: (response) => {
+            //this.filteredEmployees.data = [...this.filteredEmployees.data, result];
+            this.filteredEmployees.data = this.filteredEmployees.data.filter(emp => emp.id !== id);
+            spinner.close();
+            this.snackBar.openFromComponent(CustomSnackbarComponent, {
+              data: {
+                message: 'Employee deleted successfully',
+                type: 'success'
+              },
+              panelClass: ['custom-snackbar-container']
+            });
+          },
+          error: (err) => {
+            console.log(err);
+            spinner.close();
+            this.snackBar.openFromComponent(CustomSnackbarComponent, {
+              data: {
+                message: 'Failed to delete employee',
+                type: 'error'
+              },
+              panelClass: ['custom-snackbar-container']
+            });
+          }
+        });
+      }});
+  }
   Update(emp: Employee) {
     const ref = this.dialog.open(CreateEmployeeDialogComponent, {
       width: '70vw',     // desired width
@@ -49,6 +100,7 @@ export class EmployeeComponent {
     });
       ref.afterClosed().subscribe((result: Employee | undefined) => {
         if(result){
+          const spinner = this.dialog.open(SpinnerComponent);
           let empReq: UpdateEmployeeRequest= {
             id: emp.id,
             fullName: {
@@ -66,9 +118,34 @@ export class EmployeeComponent {
             this._employeeService.update(empReq).subscribe({
               next: (response) => {
                 //this.filteredEmployees.data = [...this.filteredEmployees.data, result];
+                emp.firstName = result.firstName;
+                emp.middelName = result.middelName;
+                emp.lastName = result.lastName;
+                emp.phoneNumber = result.phoneNumber;
+                emp.email = result.email;
+                emp.address = result.address;
+                emp.salary = result.salary;
+                emp.jobType = result.jobType;
+                emp.description = result.description;
+                spinner.close();
+                this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                  data: {
+                    message: 'Employee updated successfully',
+                    type: 'success'
+                  },
+                  panelClass: ['custom-snackbar-container']
+                });
               },
               error: (err) => {
                 console.log(err);
+                spinner.close();
+                this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                  data: {
+                    message: 'Failed to update employee',
+                    type: 'error'
+                  },
+                  panelClass: ['custom-snackbar-container']
+                });
               }
             })
           } else {
@@ -76,7 +153,7 @@ export class EmployeeComponent {
           }
         });
     }
-Add() {
+  Add() {
     const ref = this.dialog.open(CreateEmployeeDialogComponent, {
       width: '70vw',     // desired width
       maxWidth: '3000px',
@@ -84,9 +161,9 @@ Add() {
       maxHeight: '3000px',
       data: {}  // you can pass initial data here if needed
     });
-
     ref.afterClosed().subscribe((result: Employee | undefined) => {
       if (result) {
+        const spinner = this.dialog.open(SpinnerComponent);
         console.log('New employee data:', result);
         let emp: CreateEmployeeRequest= {
           fullName: {
@@ -104,27 +181,32 @@ Add() {
         this._employeeService.createEmployee(emp).subscribe({
           next: (response) => {
             this.filteredEmployees.data = [...this.filteredEmployees.data, result];
+            spinner.close();
+            this.snackBar.openFromComponent(CustomSnackbarComponent, {
+              data: {
+                message: 'Employee created successfully',
+                type: 'success'
+              },
+              panelClass: ['custom-snackbar-container']
+            });
           },
           error: (err) => {
             console.log(err);
+            spinner.close();
+            this.snackBar.openFromComponent(CustomSnackbarComponent, {
+              data: {
+                message: 'Failed to create employee',
+                type: 'error'
+              },
+              panelClass: ['custom-snackbar-container']
+            });
           }
         })
       } else {
         console.log('Dialog was cancelled');
       }
     });
-
 }
-  constructor(private _employeeService: EmployeeService, private dialog: MatDialog) {
-    const token = localStorage.getItem('token');
-    console.log(token);
-  }
-
-  JobType = JobType;
-
-  getJobTypeName(value: number): string {
-    return JobType[value];
-  }
 onInputChange($event: Event) {
 throw new Error('Method not implemented.');
 }

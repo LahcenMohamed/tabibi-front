@@ -1,0 +1,18 @@
+<div class="snackbar" [ngClass]="data.type">
+  @switch(data.type) {
+    @case('success') {
+      <mat-icon >check_circle</mat-icon>
+    }
+    @case('error') {
+      <mat-icon >error</mat-icon>
+    }
+    @default {
+      <mat-icon >info</mat-icon>
+    }
+  }
+  <span>{{ data.message }}</span>
+  <span matSnackBarActions>
+    <button matButton matSnackBarAction (click)="snackBarRef.dismissWithAction()">Close</button>
+  </span>
+
+</div>

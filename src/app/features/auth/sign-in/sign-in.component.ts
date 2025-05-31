@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../services/auth-services/auth.service';
 import { SignInRequest } from '../../../models/auth/sign-in-request';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -12,6 +12,7 @@ import { CustomInputComponent } from '../../../shared/componenets/custom-input/c
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerComponent } from '../../../shared/componenets/spinner/spinner.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CustomSnackbarComponent } from '../../../shared/componenets/custom-snackbar/custom-snackbar.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,7 +25,8 @@ import { MatDialog } from '@angular/material/dialog';
     CustomInputComponent,
     RouterLink,
     MatProgressSpinnerModule,
-    SpinnerComponent
+    SpinnerComponent,
+    MatSnackBarModule
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
@@ -62,9 +64,7 @@ export class SignInComponent {
   {
     if(this.siginupForm.valid)
     {
-      const spn = this.dialog.open(SpinnerComponent, {
-        disableClose: true // you can pass initial data here if needed
-      });
+      const spn = this.dialog.open(SpinnerComponent);
       let signInRequest: SignInRequest =
             {
               emailOrUserName: this.email.value,
@@ -74,13 +74,21 @@ export class SignInComponent {
               next: (response) => {
                 localStorage.setItem('token', response.data!);
                 this.router.navigate(['']);
+                spn.close();
               },
               error: (error) => {
+                spn.close();
                 console.error('Sign up failed:', error.message);
-                this.snackBar.open("email or password in incorrect");
+                this.snackBar.openFromComponent(CustomSnackbarComponent, {
+                  data: {
+                    message: 'Email or password is incorrect',
+                    type: 'error'
+                  },
+                  panelClass: ['custom-snackbar-container']});
+
               }
             });
-      spn.close();
+
     }
   }
 }
