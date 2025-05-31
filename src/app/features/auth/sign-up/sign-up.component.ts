@@ -5,7 +5,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { CustomInputComponent } from "../../../shared/componenets/custom-input/custom-input.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AccountData, SignUpDataService } from '../services/sign-data-service/sign-up-data.service';
 
 @Component({
@@ -16,6 +16,7 @@ import { AccountData, SignUpDataService } from '../services/sign-data-service/si
     MatInputModule,
     MatSelectModule,
     MatIconModule,
+    RouterLink,
     CustomInputComponent
   ],
   templateUrl: './sign-up.component.html',

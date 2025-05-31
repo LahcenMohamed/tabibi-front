@@ -8,3 +8,13 @@ p {
   width: 550px;
 }
 
+.conti{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    width: fit-content;
+    margin: 0;
+    margin-right: 5px;
+  }
+}
